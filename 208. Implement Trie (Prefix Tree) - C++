@@ -1,0 +1,58 @@
+//1.相比传统的字典树取消了value 用next空间换时间 用Index代替了value
+//2.如果查找到最后一个字符并且是字典树的结束 说明搜到了
+//3.如果搜索了所有前缀都有对应字符，说明符合前缀，有任何一个不匹配则不符合
+class Trie {
+private:
+     bool isEnd;
+     Trie* next[26];
+
+public:   
+    Trie() {
+        isEnd = false;
+        memset(next, 0, sizeof(next));
+    }
+    
+    void insert(string word) {
+        Trie* node = this;
+        for (char i : word) {
+            if (node->next[i-'a'] == nullptr) {
+                node->next[i-'a'] = new Trie();
+            }
+            node = node->next[i-'a'];
+        }
+        
+        node->isEnd = true;
+     }
+    
+    bool search(string word) {
+        Trie* node = this;
+        for (char i : word) {
+            Trie* next = node->next[i-'a'];
+            if (next == nullptr) {
+                return false;
+            }
+            node = node->next[i-'a'];
+        }
+        return node->isEnd;
+    }
+    
+    bool startsWith(string prefix) {
+        Trie* node = this;
+        for (char i : prefix) {
+            Trie* next = node->next[i-'a'];
+            if (next == nullptr) {
+                return false;
+            }
+            node = node->next[i-'a'];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */
