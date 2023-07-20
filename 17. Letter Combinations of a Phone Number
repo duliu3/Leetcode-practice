@@ -1,0 +1,89 @@
+class Solution {
+public:
+   void addDigit(vector<string> dic, vector<string> &ans, string digits, string temp, int index) {
+       if (index == digits.size()) {
+           cout << "push ans: " << temp <<endl;
+           ans.push_back(temp);
+           return;
+       }
+
+       int curdigit = digits[index] - '2';
+       string letters = dic[curdigit];
+       for (auto a: letters) {
+           addDigit(dic, ans, digits, temp + a, index+1);
+       }
+   }
+
+     // unorderedmap<int, string> mp;
+    //    void fillMap() {
+//          mp.put(2, "abc");
+//          mp.put(3, "def");
+//          mp.put(4, "ghi");
+//          mp.put(5, "jkl");
+//          mp.put(6, "mno");
+//          mp.put(7, "pqrs");
+//          mp.put(8, "tuv");
+//          mp.put(9, "wxyz");
+//    }
+    vector<string> letterCombinations(string digits) {
+          const std::vector<std::string> dictionary = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        vector<string> ans;
+        string temp;
+        if (digits.empty()) return ans;
+        addDigit(dictionary, ans, digits, temp, 0);
+        return ans;
+    }
+
+};
+
+//方案2：使用了动态添加但是更麻烦的ordered_map，递归实现的第二种方式但需要注意pop_back
+// 在这段代码中，我们使用 i.pop_back() 删除了字符串 i 的最后一个字符。这是因为在第二个 for 循环中，我们将 i 和 c 拼接成了一个新的字符串，并将其添加到答案数组 ans 中。但是由于这个循环还没有结束，我们需要将 i 的最后一个字符删除，以便于下一次循环时能够正确拼接新的字符串。
+// 例如，如果当前的 i 是 "abc"，c 是 'd'，那么将 i 和 c 拼接起来就是 "abcd"。如果不删除 i 的最后一个字符，那么下一次循环时就会将 "abcd" 和 mp[d] 中的每个字符拼接起来，得到 "abcde"、"abcdf"、"abcdg" 等字符串，这显然不是我们想要的结果。因此，在每次循环结束时，我们需要将 i 的最后一个字符删除，以便于下一次循环时能够正确拼接新的字符串。
+                // i.pop_back();
+                //cout << "last letters: " << i << " += new letter " << c << endl;
+
+// class Solution {
+//     unordered_map<int, string> mp;
+//     // This function for mapping numbers to the string, if 
+//     // you don't like this you can hard code this
+//     void fillMap(unordered_map<int, string> &mp) {
+//         int cnt = 2;
+//         char i = 'a'; 
+//         while (i <= 'z') {
+//             if (cnt == 7 || cnt == 9) {
+//                 for (int j = 0; j < 4; j++) {
+//                     mp[cnt] += i;
+//                     i++;
+//                 }
+//                 cnt++;
+//             } else {
+//                 for (int j = 0; j < 3; j++) {
+//                     mp[cnt] += i;
+//                     i++;
+//                 }
+//                 cnt++;
+//             }
+//         }
+//     }
+//     //This is for creating strings
+//     void f(int idx, string digits, vector<string> &ans){
+//         if(idx == digits.size()) return;
+//         vector<string> temp = ans;
+//         ans.clear();
+//         int d = digits[idx] - '0'; 
+//         for(auto i : temp){
+//             for(auto c : mp[d])
+//                 i += c, ans.push_back(i), i.pop_back();
+//         }
+//         f(idx+1, digits, ans);
+//     }
+// public:
+//     vector<string> letterCombinations(string digits) {
+//         vector<string> ans;
+//         if(digits.size() == 0) return ans;
+//         ans.push_back("");
+//         fillMap(mp);
+//         f(0, digits, ans);
+//         return ans;
+//     }
+// };
