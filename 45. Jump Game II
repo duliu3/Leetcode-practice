@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+
+			// Set each element to the maxReach value until the index i.
+			for (int i = 1; i < nums.size(); i++) {
+					nums[i] = max(nums[i-1], nums[i] + i);
+			}
+		
+			int minStep = 0;
+			int maxReach = 0;
+			// Add the minStep until the maxReach is equal to or greater than the size.
+			while (maxReach < nums.size() - 1) {
+				minStep++;
+				maxReach = nums[maxReach];
+			}
+			return minStep;
+    }
+};
