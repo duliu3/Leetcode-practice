@@ -1,0 +1,49 @@
+//C++ version has over flow issue and still cannot know why
+class Solution {
+public:
+  int hIndex(vector<int>& citations) {
+		
+  int length = citations.size();
+	int* bucket = new int[length+1];
+
+	for (auto cites: citations) {
+		if (cites >= length) {
+			bucket[length]++;
+		} else {
+			bucket[cites]++;
+		}
+	}
+	int esaayCount = 0;
+	for (int i = length; i >= 0; i--) {
+		esaayCount += bucket[i];
+		if (esaayCount >= i) {
+			return i;
+		}
+	}
+	return 0;
+	}
+};
+
+//but java is ok
+class Solution {
+    
+public int hIndex(int[] citations) {
+    int n = citations.length;
+    int[] buckets = new int[n+1];
+    for(int c : citations) {
+        if(c >= n) {
+            buckets[n]++;
+        } else {
+            buckets[c]++;
+        }
+    }
+    int count = 0;
+    for(int i = n; i >= 0; i--) {
+        count += buckets[i];
+        if(count >= i) {
+            return i;
+        }
+    }
+    return 0;
+}
+}
