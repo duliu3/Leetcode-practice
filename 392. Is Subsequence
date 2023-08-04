@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int i = 0 ;// take two pointer staring from both string
+        int j = 0;
+        while(i<s.length() && j < t.length()){//if any on pointer goes out of size of any string that means false
+            if(s[i]==t[j]){// checking same characters they have or not 
+            i++;// if both character will same we increment both pointer for checking next 
+            j++;//character equal or not
+            }
+            else j++;
+        }
+        return (i==s.length()); //if i becomes same size of string s , means we find all charcter
+    }
+};
+
+
+// class Solution {
+// public:
+//     bool isSubsequence(string s, string t) {
+//         int n = s.length(),m=t.length();
+//         int j = 0; 
+//     for (int i = 0; i < m and j < n; i++)
+//         if (s[j] == t[i])
+//             j++;
+//     return (j == n);
+//     }
+// };
