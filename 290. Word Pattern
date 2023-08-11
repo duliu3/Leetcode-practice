@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        vector<string> words;
+        stringstream ss(s);
+        string token;
+        int count = 0;
+        int size = pattern.size();
+        while(getline(ss,token,' ')){
+            words.push_back(token);
+            count++;
+        }
+        if(count!=size){
+            return false;
+        }
+        unordered_map<string,char> mp;
+        bool presentInMap[26] = {0};
+        for(int i=0; i<count; i++){
+            string str = words[i];
+            char ch = pattern[i];
+            if(mp.find(str)!=mp.end()){
+                if(mp[str]!=ch) return false;
+            }
+            else if(presentInMap[ch-'a'] == 1){
+                return false;
+            }
+            mp[str] = ch;
+            presentInMap[ch-'a'] = 1;
+        }
+        return true;
+    }
+};
