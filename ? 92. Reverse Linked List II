@@ -1,0 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if(!head)   return NULL;
+        if(!head->next) return head;
+
+        ListNode *dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode *prev = dummy;
+
+        for(int i = 0; i < left - 1; i++)    prev = prev->next;
+        ListNode *curr = prev->next;
+
+// 在循环内部，首先将 curr 的下一个节点 forw 暂存起来，然后将 curr 的 next 指针指向 forw 的下一个节点，这样 curr 就跳过了 forw 这个节点。接着，将 forw 的 next 指针指向 prev 的下一个节点，也就是将 forw 插入到了 prev 和 curr 之间。
+// 这样，每次循环都会将 curr 的下一个节点插入到 prev 和 curr 之间，从而逐步完成了整个区间的反转。最后返回 dummy 的 next 指针即可，这个指针指向了反转后的链表头节点。
+        for(int i = 0; i < right - left; i++)
+        {
+            ListNode *forw = curr->next;
+            curr->next = forw->next;
+            forw->next = prev->next;
+            prev->next = forw;
+        }
+        return dummy->next;
+    }
+};
