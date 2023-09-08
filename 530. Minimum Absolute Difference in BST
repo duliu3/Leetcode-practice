@@ -1,0 +1,20 @@
+class Solution {
+public:
+    void function(TreeNode* root,int &preVal,int &minDiff){
+        if(root == NULL)
+        return;
+        // 使用中序遍历是因为二叉搜索树的中序遍历是一个有序序列，按照从小到大的顺序遍历每个节点，就可以保证任意两个节点之间的差值最小。如果使用其他遍历方式，比如前序遍历或后序遍历，就不能保证节点的值是按照从小到大的顺序排列的，这样就无法找到任意两个节点之间的最小差值。
+        function(root->left,preVal,minDiff);
+        if(preVal != -1){
+            minDiff = min(minDiff,root->val - preVal);
+        }
+        preVal = root->val;
+        function(root->right,preVal,minDiff);
+    }
+    int getMinimumDifference(TreeNode* root) {
+        int minDiff = INT_MAX;
+        int preVal = -1;
+      function(root,preVal,minDiff);
+      return minDiff;
+    }
+};
