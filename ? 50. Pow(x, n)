@@ -1,0 +1,24 @@
+class Solution {
+public:
+    double myPow(double x, int n) {
+        long long int k=abs(n);
+        double ans=1.0;
+        if(n==0) return 1.0;
+        if(x==1.0) return x;
+        while(k>0)
+        {
+            // ans=ans*x;
+            // k--;
+            // 奇数和偶数的计算方法不同是因为在计算x的n次方时，可以利用指数的二进制表示来优化计算。具体来说，如果n是奇数，则将ans乘以x并将k减1，相当于将n-1作为指数，然后再计算x的n-1次方；如果n是偶数，则将x平方并将k除以2，相当于将n/2作为指数，然后再计算x的n/2次方。这样可以减少计算量和时间复杂度。
+            if(k%2){ ans=ans*x; k--;}
+            else{ x=x*x; k=k/2;}
+        }
+        if(n<0)
+        {
+            double p=(double)(1.0)/(double)(ans);
+            return p;
+        }
+        
+        return ans;    
+    }
+};
