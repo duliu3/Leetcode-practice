@@ -1,0 +1,16 @@
+
+class Solution {
+public:
+    bool fun(TreeNode* root,long long minval,long long maxval){
+        if(!root) return true;
+        if(root->val>=maxval || root->val<=minval) return false;
+
+        return(fun(root->left,minval,root->val) && fun(root->right,root->val,maxval));
+    }
+
+    bool isValidBST(TreeNode* root) {
+        return fun(root,LONG_MIN,LONG_MAX);
+    }
+
+    
+};
